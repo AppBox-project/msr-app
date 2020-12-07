@@ -2,7 +2,108 @@
 script:
   - action: installClient
     folder: Client
-
+  - action: createModel
+    model: msr-placements
+  - action: registerSystemValues
+    values:
+      people:
+        fields:
+          has_active_placement:
+            name: Has active placement
+            type: formula
+            typeArgs:
+              type: boolean
+              formula: {{is_greater_than(count_related("msr-placements","temp",[{"field":"active","operator":"equals","value":true}]),0)}}
+        overviews:
+          temps:
+            fields:
+            - picture
+            - full_name
+            - age
+            - has_active_placement
+            buttons:
+            - create
+            actions:
+            - delete
+        layouts:
+          temp:
+            layout:
+            - type: AnimationContainer
+              id: kieqfb4p
+              items:
+              - type: GridContainer
+                id: kieqfdys
+                items:
+                - type: GridItem
+                  id: kieqfj1d
+                  xs: 12
+                  md: 9
+                  key: temp
+                  items:
+                  - type: AnimationItem
+                    id: kieqfzqf
+                    items:
+                    - type: Paper
+                      id: kieqg5x5
+                      title: "{full_name}"
+                      withBigMargin: true
+                      items:
+                      - type: FieldGrid
+                        id: kieqsggx
+                        title: Main
+                        layout:
+                        - id: kieqsm9s
+                          name: Basic info
+                          columns: 2
+                          showTitle: true
+                          defaultExpanded: true
+                          items:
+                          - first_name
+                          - last_name
+                          - email
+                          - address
+                          - birthday
+                          - gender
+                        - id: kieqtbo3
+                          name: Temp information
+                          columns: 2
+                          showTitle: true
+                          defaultExpanded: false
+                          items:
+                          - password
+                          - has_active_placement
+                - type: GridItem
+                  id: kieqfl3p
+                  xs: 12
+                  md: 3
+                  key: temp
+                  items:
+                  - type: AnimationItem
+                    id: kieqg1y1
+                    items:
+                    - type: RelatedList
+                      id: kieqhip0
+                      title: Placements
+                      object: msr-placements
+                      field: temp
+                      displayfields: contract_phase,start_date,end_date
+                      valueCopyFields: temp=_id
+                      onlyVisibleWithResults: false
+                      displayCard: true
+                      withBigMargin: true
+                      addButton: true
+            buttons: []
+            factsBar:
+            - picture
+            - full_name
+            - gender
+            - age
+            - has_active_placement
+        types:
+          - label: Customer
+            key: customer
+            withList: true
+            listName: Customers
   - compile
   - action: registerApp
     info:
@@ -18,4 +119,175 @@ script:
 # Data to load into the system
 data:
   models:
+    msr-placements:
+      preview:
+        fields: []
+      permissions:
+        read:
+        - known
+        create:
+        - known
+        modifyOwn:
+        - known
+        write:
+        - known
+        delete:
+        - known
+        deleteOwn:
+        - known
+        archive:
+        - known
+        archiveOwn:
+        - known
+      key: msr-placements
+      name: Placement
+      name_plural: Placements
+      linked: true
+      primary: name
+      icon: FaFileContract
+      actions:
+        create:
+          layout: default
+          type: create
+      overviews:
+        default:
+          fields:
+          - name
+          - temp
+          - customer
+          - contract_phase
+          - start_date
+          - end_date
+          buttons:
+          - create
+          actions:
+          - delete
+      layouts:
+        default:
+          layout:
+          - type: AnimationContainer
+            xs: 12
+            id: kf2r51ws
+            items:
+            - type: AnimationItem
+              xs: 12
+              id: kf2r5375
+              items:
+              - type: Paper
+                xs: 12
+                id: kf2r56lv
+                title: Placement
+                withBigMargin: true
+                key: default
+                items:
+                - type: FieldGrid
+                  id: kiel1hw4
+                  title: ''
+                  layout:
+                  - id: kiel1jeo
+                    name: Basic information
+                    columns: 2
+                    showTitle: true
+                    defaultExpanded: true
+                    items:
+                    - temp
+                    - customer
+                    - start_date
+                    - end_date
+                  - id: kiel1yyj
+                    name: Contract
+                    columns: 2
+                    showTitle: true
+                    defaultExpanded: true
+                    items:
+                    - contract_phase
+                    - active
+          buttons: []
+          factsBar:
+          - temp
+          - customer
+        create:
+          layout:
+          - type: FieldGrid
+            id: kiel2uqf
+            title: Create
+            layout:
+            - id: kiel1jeo
+              name: Basic information
+              columns: 2
+              showTitle: true
+              defaultExpanded: true
+              items:
+              - temp
+              - customer
+              - start_date
+              - end_date
+            - id: kiel1yyj
+              name: Contract
+              columns: 2
+              showTitle: true
+              defaultExpanded: true
+              items:
+              - contract_phase
+              - active
+          buttons: []
+      fields:
+        name:
+          name: Name
+          type: auto_name
+          typeArgs:
+            prefix: PLACEMENT
+            mode: increment
+        temp:
+          type: relationship
+          required: true
+          typeArgs:
+            relationshipTo: people
+          name: Temp
+        customer:
+          name: Customer
+          type: relationship
+          typeArgs:
+            relationshipTo: companies
+          required: true
+        contract_phase:
+          name: Contract phase
+          type: options
+          typeArgs:
+            options:
+            - label: Phase A
+              key: Phase A
+            - label: Phase B
+              key: Phase B
+            - label: Phase C
+              key: Phase C
+        start_date:
+          name: Start date
+          type: date
+        end_date:
+          name: End date
+          type: date
+        active:
+          name: Active
+          type: formula
+          typeArgs:
+            type: boolean
+            formula: "{{ AND(is_smaller_than(start_date,__TODAY),is_greater_than(end_date,__TODAY))
+              }}"
+      __v: 2
+      app: msr
+      lists:
+        active:
+          name: Active
+          filter:
+          - key: active
+            operator: equals
+            value: true
+        inactive:
+          name: Inactive
+          filter:
+          - key: active
+            operator: equals
+            value: false
+
   objects:
