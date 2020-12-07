@@ -108,8 +108,8 @@ script:
   - compile
   - action: registerApp
     info:
-      name: Support
-      icon: FaTicketAlt
+      name: MSR
+      icon: FaBriefcase
       repository: https://github.com/Duveaux/msr-app.git
       color:
         r: 0
