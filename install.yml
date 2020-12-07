@@ -1,0 +1,21 @@
+# Install script
+script:
+  - action: installClient
+    folder: Client
+
+  - compile
+  - action: registerApp
+    info:
+      name: Support
+      icon: FaTicketAlt
+      repository: https://github.com/Duveaux/msr-app.git
+      color:
+        r: 0
+        g: 159
+        b: 220
+  - cleanUp
+
+# Data to load into the system
+data:
+  models:
+  objects:
