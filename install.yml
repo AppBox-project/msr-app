@@ -4,6 +4,10 @@ script:
     folder: Client
   - action: createModel
     model: msr-placements
+  - action: createModel
+    model: msr-cla
+  - action: createModel
+    model: msr-cla-versions
   - action: registerSystemValues
     values:
       people:
