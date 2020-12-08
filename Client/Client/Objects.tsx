@@ -18,6 +18,7 @@ const objectSettingsMap = {
       disableLists: true,
       applyList: "customers",
       alternativeTitle: { single: "Customer", plural: "Customers" },
+      detailId: "customer",
     },
   },
   contacts: {
@@ -29,6 +30,8 @@ const objectSettingsMap = {
     },
   },
   placements: { modelId: "msr-placements", applyList: "active" },
+  "labour-agreements": { modelId: "msr-cla" },
+  "labour-agreement-versions": { modelId: "msr-cla-versions" },
 };
 
 const AppActionObject: React.FC<{ action; context: AppContextType }> = ({

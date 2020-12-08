@@ -100,11 +100,17 @@ script:
               - gender
               - age
               - has_active_placement
-        types:
-          - label: Customer
-            key: customer
-            withList: true
-            listName: Customers
+        lists:
+          customers:
+            name: Customers
+            filter:
+              - key: types
+                operator: equals
+                value: customer
+        dropdown_options:
+          types:
+            - label: Customer
+              key: customer
   - compile
   - action: registerApp
     info:
@@ -290,5 +296,237 @@ data:
             - key: active
               operator: equals
               value: false
-
+    msr-cla:
+      preview:
+        fields: []
+      permissions:
+        read:
+          - known
+        create:
+          - known
+        modifyOwn:
+          - known
+        write:
+          - known
+        delete:
+          - known
+        deleteOwn:
+          - known
+        archive:
+          - known
+        archiveOwn:
+          - known
+      key: msr-cla
+      name: Labour Agreement
+      name_plural: Labour Agreements
+      actions:
+        create:
+          layout: create
+          type: create
+      overviews:
+        default:
+          fields:
+            - name
+          buttons:
+            - create
+          actions:
+            - delete
+      layouts:
+        default:
+          layout:
+            - type: AnimationContainer
+              id: kf2r51ws
+              items:
+                - type: GridContainer
+                  id: kig9bd5h
+                  items:
+                    - type: GridItem
+                      id: kig9bey7
+                      items:
+                        - type: AnimationItem
+                          id: kig9c3ht
+                          items:
+                            - type: Paper
+                              id: kig9c8u3
+                              title: "{name}"
+                              withBigMargin: true
+                              items:
+                                - type: Field
+                                  id: kigakc7b
+                                  field: name
+                                - type: GridContainer
+                                  id: kigakuna
+                                  items:
+                                    - type: GridItem
+                                      id: kigakxk5
+                                      xs: "6"
+                                      items:
+                                        - type: Field
+                                          id: kigala7z
+                                          field: scales
+                                    - type: GridItem
+                                      id: kigal68x
+                                      xs: "6"
+                                      items:
+                                        - type: Field
+                                          id: kigalca5
+                                          field: steps
+                    - type: GridItem
+                      id: kig9bgin
+                      xs: 12
+                      md: "3"
+                      items:
+                        - type: AnimationItem
+                          id: kig9c4zz
+                          items:
+                            - type: RelatedList
+                              id: kig9clee
+                              title: Versions
+                              object: msr-cla-versions
+                              field: labour_agreement
+                              displayfields: name
+                              valueCopyFields: labour_agreement=_id
+                              onlyVisibleWithResults: false
+                              displayCard: true
+                              withBigMargin: true
+                              addButton: true
+                              md: "3"
+          buttons: []
+        create:
+          layout:
+            - type: Field
+              id: kig3z6pn
+              field: name
+          buttons: []
+      app: msr
+      icon: FaTable
+      indexed: true
+      primary: name
+      fields:
+        name:
+          name: Name
+          type: input
+          typeArgs:
+            type: text
+          required: true
+          unique: true
+        scales:
+          name: Scales
+          required: true
+          type: input
+          typeArgs:
+            type: text
+        steps:
+          name: Steps
+          type: input
+    msr-cla-versions:
+      preview:
+        fields: []
+      permissions:
+        read:
+          - known
+        create:
+          - known
+        modifyOwn:
+          - known
+        write:
+          - known
+        delete:
+          - known
+        deleteOwn:
+          - known
+        archive:
+          - known
+        archiveOwn:
+          - known
+      key: msr-cla-versions
+      name: Labour Agreement Version
+      name_plural: Labour Agreement Versions
+      actions:
+        create:
+          layout: create
+          type: create
+      overviews:
+        default:
+          fields:
+            - labour_agreement
+            - name
+            - fulltime_length
+            - active
+          buttons:
+            - create
+          actions:
+            - delete
+      layouts:
+        default:
+          layout:
+            - type: AnimationContainer
+              id: kf2r51ws
+              items:
+                - type: AnimationItem
+                  id: kf2r5375
+                  items:
+                    - type: Paper
+                      id: kf2r56lv
+                      title: "{name}"
+                      withBigMargin: true
+                      key: default
+                      items:
+                        - type: Field
+                          id: kigayvkh
+                          field: name
+                        - type: Field
+                          id: kigazb5m
+                          field: fulltime_length
+                        - type: Field
+                          id: kigazf3l
+                          field: active
+                        - type: Field
+                          id: kigazind
+                          field: labour_agreement
+                      field: name
+          buttons: []
+        create:
+          layout:
+            - type: Field
+              id: kigaxkdy
+              field: name
+            - type: Field
+              id: kigaxnr8
+              field: fulltime_length
+            - type: Field
+              id: kigaxqt5
+              field: active
+            - type: Field
+              id: kigaxukz
+              field: labour_agreement
+          buttons: []
+      app: msr
+      icon: FaBorderNone
+      primary: name
+      fields:
+        name:
+          name: Name
+          required: true
+          unique: true
+          type: input
+          typeArgs:
+            type: text
+        fulltime_length:
+          name: Fulltime length
+          type: input
+          typeArgs:
+            type: number
+          required: true
+        active:
+          name: Active
+          type: boolean
+        labour_agreement:
+          name: Labour agreement
+          type: relationship
+          required: true
+          typeArgs:
+            relationshipTo: msr-cla
+      handlers:
+        msr: "/msr/labour-agreement-versions/{object:_id}"
   objects:

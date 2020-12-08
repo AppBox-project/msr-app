@@ -1,8 +1,10 @@
-import FourOhFour from "../../Components/FourOhFour";
 import {
+  FaBorderNone,
   FaBuilding,
   FaDashcube,
+  FaFileContract,
   FaPeopleCarry,
+  FaTable,
   FaUserTie,
 } from "react-icons/fa";
 import Objects from "./Objects";
@@ -45,19 +47,35 @@ export default class App {
           component: Objects,
           icon: FaBuilding,
           group: "Customers",
+          subItems: [
+            {
+              key: "contacts",
+              label: "Contacts",
+              component: Objects,
+              icon: FaUserTie,
+            },
+          ],
         },
         {
-          key: "contacts",
-          label: "Contacts",
+          key: "labour-agreements",
+          label: "Agreements",
           component: Objects,
-          icon: FaUserTie,
+          icon: FaTable,
           group: "Customers",
+          subItems: [
+            {
+              key: "labour-agreement-versions",
+              label: "Versions",
+              component: Objects,
+              icon: FaBorderNone,
+            },
+          ],
         },
         {
           key: "placements",
           label: "Placements",
           component: Objects,
-          icon: FaUserTie,
+          icon: FaFileContract,
           group: "Placements",
         },
       ]);
