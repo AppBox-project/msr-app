@@ -106,11 +106,19 @@ script:
             filter:
               - key: types
                 operator: equals
-                value: customer
+                value: Customer
+          temps:
+            name: Temps
+            filter:
+              - key: types
+                operator: equals
+                value: Employee
         dropdown_options:
           types:
             - label: Customer
-              key: customer
+              key: Customer
+            - label: Employee
+              key: Employee
   - compile
   - action: registerApp
     info:
